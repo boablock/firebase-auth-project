@@ -3,6 +3,7 @@ import { useAuth } from "../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 // import {Navigate} from 'react-router-dom'
 import { Alert } from "./Alert";
+import { async } from "@firebase/util";
 
 export const Login = () => {
   const [user, setUser] = useState({
@@ -10,7 +11,7 @@ export const Login = () => {
     password: "",
   });
 
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, resetPassword } = useAuth();
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -39,6 +40,16 @@ export const Login = () => {
       setError(error.message);
     }
   };
+  const handleResetPassword =  async () => {
+    if(!user.email) return setError('Please enter your email')
+    try {
+      await resetPassword(user.email)
+      setError('We sent you an email with a link to reset your password :)')
+    } catch (error) {
+      setError(error.message)
+    }
+   
+  }
 
   return (
     <div className="w-full max-w-xs m-auto">
@@ -79,12 +90,24 @@ export const Login = () => {
             onChange={handleChange}
           />
         </div>
-        <button className="bg-violet-500 hover:bg-violet-700 text-white text-sm font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline  ">
-          Login
-        </button>
+        <div className="flex items-center justify-between">
+          <button className="bg-violet-500 hover:bg-violet-700 text-white text-sm font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline  ">
+            Login
+          </button>
+          <a
+            href="#!"
+            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+            onClick={handleResetPassword}
+          >
+            Forgot password?
+          </a>
+        </div>
       </form>
       <p className="my-4 text-sm flex justify-start px-3">
-        Dont have an Account? <Link to="/register">Register</Link>
+        Dont have an Account?{" "}
+        <Link className=" text-blue-700 hover:text-blue-900" to="/register">
+          Register
+        </Link>
       </p>
       <button
         onClick={handleGoogleSignIn}

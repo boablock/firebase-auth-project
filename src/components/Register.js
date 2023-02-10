@@ -14,27 +14,12 @@ export function Register() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // HANDLE FUNCTION ( INPUS AND SUBMIT ) -
-  //capturing user data through envent-inputs. The idea is capturing the input-event information
 
-  // exploring inputEvent object properties / before destructuring (inpunt-event-objects handles events that occur when input elements are changed).
-  // const handleChange = (e) => {
-  //   console.log(e.target.name, e.target.value);
-  // };
-
-  //with destructuring: Deep definition: destructuration the target props (name, value) of the object (e). Syntax of for destructuris the targets props-> target: {name, value}
-  // const handleChange = ({target: {name,value}}) => {
-  //   console.log({[name]:value}); // {email: 'boablockchain@gmail.com'}
-  // };
-
-  // adding setUser --> now, value will be defined on the state/ahora el valor esta definido en el estado: setUser({...user, [name]: value});
-  // update state function
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
   };
 
   // function to show the user state when form is submited (and prevent default submit)
-
   // Sending user data to firebase
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +32,7 @@ export function Register() {
     }
   };
 
-  // then, must be sended to firebase /se debe
+  // then, must be sended to firebase 
   // then, function is used in the input onchange event
   return (
     <div className="w-full max-w-xs m-auto">
